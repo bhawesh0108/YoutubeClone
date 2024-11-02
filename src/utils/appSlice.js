@@ -8,9 +8,12 @@ const appSlice = createSlice({
     reducers:{
         toggleSideNav: (state)=>{
             state.showSideNav = !state.showSideNav;
+        },
+        closeSideNav:(state)=>{
+            state.showSideNav = false;
         }
     }
 })
 
-export const {toggleSideNav} = appSlice.actions;
+export const {toggleSideNav,closeSideNav} = appSlice.actions;
 export default appSlice.reducer;

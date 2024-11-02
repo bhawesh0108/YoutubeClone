@@ -1,13 +1,16 @@
 import React from 'react'
 
-const Video = ({snippet,statistics}) => {
+
+const Video = ({id,snippet,statistics}) => {
 
   const {channelTitle,title} = snippet;
   const {viewCount} = statistics;
+ 
 return (
-    <div className='flex flex-col h-80 w-64 gap-2 text-white'>
-        <div className='h-[50%] w-full'>
-         <img className='h-full w-full object-cover' src={snippet.thumbnails.medium.url} />
+
+       <div className='flex flex-col h-[100%] w-[100%] gap-2 text-white'>
+        <div className='h-[60%] w-full overflow-hidden rounded-lg bg-blue-500'>
+         <img className='h-full w-full object-cover rounded-lg' src={snippet.thumbnails.high.url} />
         </div>
         <div className='flex flex-col gap-2 overflow-hidden text-sm font-bold'>
             <h3>{title}</h3>
@@ -17,6 +20,8 @@ return (
         </div>
 
     </div>
+
+
   )
 }
 

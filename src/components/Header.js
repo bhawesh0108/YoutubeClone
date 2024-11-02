@@ -1,10 +1,66 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import image from '../images/Bhawesh.jpeg'
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import { toggleSideNav } from '../utils/appSlice'
+import { YOUTUBE_SEARCH_SUGGESTIONS_API, YOUTUBE_SEARCH_VIDEOS_API } from '../utils/constants'
+import { setSuggestionsMemo } from '../utils/suggestionsSlice'
+import { Link } from 'react-router-dom'
+
 const Header = () => {
 
+  const [searchQuery,setSearchQuery] = useState("");
+  const [suggestions,setSuggestions] = useState([]);
+  const [showSuggestions,setShowSuggestions] = useState(false);
   const dispatch = useDispatch();
+
+  const suggestionsMemo = useSelector((store)=>store.suggestions)
+
+  useEffect(()=>{
+    
+    let interval = setTimeout(()=>fetchSuggestions(),200);
+
+    return ()=>{
+      clearTimeout(interval);
+    }
+
+  },[searchQuery])
+
+  const fetchSuggestions = async ()=>{
+
+    if(suggestionsMemo[searchQuery])
+    {
+ 
+      setSuggestions(suggestionsMemo[searchQuery]);
+    }
+    else{
+      const data = await fetch(YOUTUBE_SEARCH_SUGGESTIONS_API+searchQuery);
+      const json = await data.json();
+      setSuggestions(json[1]);
+      dispatch(setSuggestionsMemo({
+        [searchQuery]:json[1]
+      }))
+
+    }
+
+
+   
+
+  }
+
+  const handleSearchQuery = (e)=>{
+
+    setSearchQuery(e.target.value);
+
+  }
+
+  const handleInputBlur = ()=>{
+    setTimeout(()=>{
+       setShowSuggestions(false);
+    },200)
+  }
+
+
+
 
   const handleBurgerIconClick = ()=>{
   
@@ -20,7 +76,23 @@ const Header = () => {
         </div>
 
         <div className= "w-[90%] h-[100%] flex justify-center items-center">
-            <input className='bg-[#272727] p-4 w-[45%] h-[80%] border border-[#303030] rounded-l-full' placeholder='Search' type="text" />
+          <div className='w-[45%] h-[80%] flex flex-col relative'>
+          <input  onFocus={()=>setShowSuggestions(true)} onBlur={handleInputBlur}  value={searchQuery} onChange={handleSearchQuery} className='bg-[#272727] p-4 w-[100%] h-[100%] border border-[#303030] rounded-l-full text-white' placeholder='Search' type="text" />
+           { showSuggestions && <div  className='absolute top-10 w-[100%] rounded-lg overflow-hidden'>
+              {suggestions.map((item,index)=>(
+
+                <Link to={"/results?search_query="+item}  className='text-white font-semibold bg-[#303030] hover:bg-[#272727] w-[100%] py-2 px-4 flex flex-col' key={index} >
+                  {item} 
+                </Link> 
+              )
+               
+
+              )}
+
+            </div>}
+
+          </div>
+
             <button className='bg-[#272727] p-2 border border-[#303030] rounded-r-full h-[80%] w-[7%]'>🔍</button>
 
         </div>

@@ -14,7 +14,6 @@ const ButtonList = () => {
         <Button name='Romance' />
         <Button name='OOPS' />
         <Button name='Football' />
-        <Button name='Comedy' />
     </div>
   )
 }
