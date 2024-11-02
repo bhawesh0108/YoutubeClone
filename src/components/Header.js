@@ -93,7 +93,7 @@ const Header = () => {
 
           </div>
 
-            <button className='bg-[#272727] p-2 border border-[#303030] rounded-r-full h-[80%] w-[7%]'>🔍</button>
+            <Link to={"/results?search_query="+searchQuery} className='bg-[#272727] p-2 border border-[#303030] rounded-r-full h-[80%] w-[7%]'>🔍</Link>
 
         </div>
 
