@@ -8,3 +8,7 @@ export const YOUTUBE_VIDEO_DETAILS_API = "https://www.googleapis.com/youtube/v3/
 export const YOUTUBE_SEARCH_SUGGESTIONS_API = "https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
 
 export const YOUTUBE_SEARCH_VIDEOS_API = "https://www.googleapis.com/youtube/v3/search?maxResults=50&key="+API_KEY+"&q=";
+
+export const YOUTUBE_COMMENTS_API = "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=50&key="+API_KEY+"&videoId=";
+
+export const YOUTUBE_COMMENT_REPLIES_API = "https://www.googleapis.com/youtube/v3/comments?part=snippet&maxResults=50&key="+API_KEY+"&parentId=";
