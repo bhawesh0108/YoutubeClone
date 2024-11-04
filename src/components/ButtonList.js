@@ -8,12 +8,12 @@ const ButtonList = () => {
         <Button name='Sports' />
         <Button name='LaLiga' />
         <Button name='Bollywood' />
-        <Button name='Love' />
+        <Button name='Movies' />
         <Button name='Javascript' />
-        <Button name='Cricket' />
-        <Button name='Romance' />
-        <Button name='OOPS' />
-        <Button name='Football' />
+        <Button name='Aaj Tak' />
+        <Button name='Shakira' />
+        <Button name='Arijit' />
+        <Button name='News' />
     </div>
   )
 }
