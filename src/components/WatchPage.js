@@ -1,23 +1,45 @@
 import React,{useEffect,useState} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {useSearchParams} from 'react-router-dom'
 import { closeSideNav } from '../utils/appSlice'
 import { YOUTUBE_COMMENT_REPLIES_API, YOUTUBE_COMMENTS_API } from '../utils/constants'
 import Comment from "./Comment"
+import LiveChatItem from './LiveChatItem'
+import { addMessage } from '../utils/liveChatSlice'
+import { getRandomName,generateRandomChatMessage } from '../utils/helper'
+
 
 const WatchPage = () => {
 
 const dispatch = useDispatch()
 const [searchParam]  = useSearchParams();
 const [comments,setComments] = useState([])
+const [liveComment,setLiveComment] = useState("");
+const liveChatMessages = useSelector((store)=>store.liveChat.messages)
+const sideNav = useSelector((store)=>store.appSlice.showSideNav)
 
   useEffect(()=>{
-
+     
      dispatch(closeSideNav())
      fetchVideoComments()
 
-  },[])
+     let interval=setInterval(()=>{
 
+        let randomName = getRandomName();
+        let chatComment = generateRandomChatMessage();
+
+      dispatch(addMessage({
+        name:randomName,
+        comment:chatComment
+      }))
+
+     },1500)
+
+     return ()=>{
+        clearInterval(interval);
+     }
+
+  },[])
 
 
   const fetchVideoComments = async ()=>{
@@ -26,20 +48,27 @@ const [comments,setComments] = useState([])
 
     setComments(commentsJson.items);
 
-    console.log(commentsJson);
+  }
 
-    const data2 = await fetch(YOUTUBE_COMMENT_REPLIES_API+commentsJson.items[0].id);
-    const replies = await data2.json();
+  const handleLiveChatSubmit = (e)=>{
+    e.preventDefault()
 
-    console.log(replies);
+    dispatch(addMessage({
+        name:"Bhawesh",
+        comment:liveComment
+    }))
+
+    setLiveComment("");
+
 
 
   }
 
   return (
-    <div className='px-5 flex flex-col gap-4 w-[100%] h-[100vh] ml-6'>
+    <div className='px-5 flex gap-2 w-[100%] h-[100vh] ml-6'>
+     <div className='flex flex-col gap-4 w-[70%] h-[100%]'>      
  <iframe
-  className="rounded-lg w-[70%] h-[70%]"
+  className="rounded-lg w-[95%] h-[65%]"
   src={`https://www.youtube.com/embed/${searchParam.get('v')}`}
   title="YouTube video player"
   frameBorder="0"
@@ -57,6 +86,19 @@ const [comments,setComments] = useState([])
 
 
 </div>
+</div>
+<div className='flex flex-col h-[70vh] w-[30%] gap-2'>
+<div className='h-[90%] rounded-lg bg-gray-600 text-white overflow-y-auto flex flex-col-reverse'>
+
+  {liveChatMessages.map((message)=> <LiveChatItem name={message.name} comment={message.comment} />)}
+
+</div>
+<form onSubmit={handleLiveChatSubmit} className= 'text-black h-[10%] w-[100%]'>
+    <input value={liveComment} onChange={(e)=>setLiveComment(e.target.value)} className='p-2 border rounded-lg w-[75%]' type="text" placeholder='Type...' />
+    <input className= "font-bold p-2 w-[20%] bg-green-200 rounded-lg ml-2" type="submit" value="Chat" />
+</form>
+</div>
+
     </div>
   )
 }
