@@ -12,3 +12,5 @@ export const YOUTUBE_SEARCH_VIDEOS_API = "https://www.googleapis.com/youtube/v3/
 export const YOUTUBE_COMMENTS_API = "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&maxResults=50&key="+API_KEY+"&videoId=";
 
 export const YOUTUBE_COMMENT_REPLIES_API = "https://www.googleapis.com/youtube/v3/comments?part=snippet&maxResults=50&key="+API_KEY+"&parentId=";
+
+export const YOUTUBE_RELATED_VIDEOS_API = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key="+API_KEY+"&relatedToVideoId=";

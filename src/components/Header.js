@@ -42,9 +42,6 @@ const Header = () => {
 
     }
 
-
-   
-
   }
 
   const handleSearchQuery = (e)=>{
@@ -85,8 +82,7 @@ const Header = () => {
                   {item} 
                 </Link> 
               )
-               
-
+              
               )}
 
             </div>}

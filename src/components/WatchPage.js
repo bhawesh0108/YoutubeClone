@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {useSearchParams} from 'react-router-dom'
 import { closeSideNav } from '../utils/appSlice'
-import { YOUTUBE_COMMENT_REPLIES_API, YOUTUBE_COMMENTS_API } from '../utils/constants'
+import { YOUTUBE_COMMENT_REPLIES_API, YOUTUBE_COMMENTS_API, YOUTUBE_RELATED_VIDEOS_API } from '../utils/constants'
 import Comment from "./Comment"
 import LiveChatItem from './LiveChatItem'
 import { addMessage } from '../utils/liveChatSlice'
@@ -22,6 +22,7 @@ const sideNav = useSelector((store)=>store.appSlice.showSideNav)
      
      dispatch(closeSideNav())
      fetchVideoComments()
+
 
      let interval=setInterval(()=>{
 

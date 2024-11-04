@@ -17,11 +17,7 @@ const VideoContainer = () => {
 
     const data = await fetch(YOUTUBE_POPULAR_VIDEOS_API);
     const json = await data.json();
-    console.log(json)
-
     setVideos(json.items)
- 
-
   }
   if(videos==null)
     return <h1>Loading...</h1>

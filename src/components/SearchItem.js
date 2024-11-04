@@ -16,6 +16,8 @@ const SearchItem = ({id}) => {
         
         const data = await fetch(YOUTUBE_VIDEO_DETAILS_API+"&id="+id);
         const details = await data.json();
+
+        console.log(details)
         
         setVideoDetails(details?.items[0]?.snippet)
 
